@@ -1,20 +1,35 @@
-# Sysmon Configuration for Wazuh
+# 🛡️ Sysmon Configuration for Wazuh
 
-## Overview
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Sysmon](https://img.shields.io/badge/Sysmon-v15.0+-green.svg)](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
+[![Wazuh](https://img.shields.io/badge/Wazuh-Compatible-orange.svg)](https://wazuh.com)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-Mapped-red.svg)](https://attack.mitre.org/)
 
-This repository contains a comprehensive Sysmon configuration file (`sysmon_config.xml`) specifically designed for integration with Wazuh SIEM. The configuration is optimized to detect and monitor security-relevant events based on MITRE ATT&CK framework techniques.
+## 📋 Overview
 
-## What is Sysmon?
+This repository contains a comprehensive Sysmon configuration file (`sysmon_config.xml`) specifically designed for integration with **Wazuh SIEM**. The configuration is optimized to detect and monitor security-relevant events based on **MITRE ATT&CK** framework techniques.
+
+---
+
+### 👨‍💻 Author & Company
+
+**Developed by:** Paolo Kappa  
+**Company:** [GOLINE SA](https://www.goline.ch)  
+**Specialization:** Cybersecurity & SIEM Solutions
+
+---
+
+## 🔍 What is Sysmon?
 
 System Monitor (Sysmon) is a Windows system service and device driver that logs system activity to the Windows Event Log. It provides detailed information about process creations, network connections, and changes to file creation time that are essential for security monitoring and incident response.
 
-## Configuration Structure
+## 🏗️ Configuration Structure
 
-### Main Configuration Elements
+### 🔧 Main Configuration Elements
 
 The `sysmon_config.xml` file is structured with the following key components:
 
-#### 1. Schema and Global Settings
+#### 1. ⚙️ Schema and Global Settings
 ```xml
 <Sysmon schemaversion="4.90">
   <HashAlgorithms>*</HashAlgorithms>
@@ -28,14 +43,14 @@ The `sysmon_config.xml` file is structured with the following key components:
 - **DnsLookup**: Controls DNS lookups for IP addresses (disabled for performance)
 - **ArchiveDirectory**: Directory where preserved files are saved
 
-#### 2. Event Filtering
+#### 2. 🎯 Event Filtering
 
 The configuration uses two main rule groups:
 
-##### Include Rules (`onmatch="include"`)
+##### ✅ Include Rules (`onmatch="include"`)
 These rules specify events that **should be logged**. The configuration focuses on detecting:
 
-**MITRE ATT&CK Techniques Covered:**
+**🎯 MITRE ATT&CK Techniques Covered:**
 - **T1546.008** - Accessibility Features (sethc.exe, utilman.exe, osk.exe, etc.)
 - **T1548.002** - Bypass User Access Control (UAC bypass techniques)
 - **T1218** - System Binary Proxy Execution (regsvr32, rundll32, mshta, etc.)
@@ -49,17 +64,17 @@ These rules specify events that **should be logged**. The configuration focuses 
 - **T1057** - Process Discovery
 - And many more...
 
-##### Exclude Rules (`onmatch="exclude"`)
+##### ❌ Exclude Rules (`onmatch="exclude"`)
 These rules specify legitimate activities that **should NOT be logged** to reduce noise:
 
-- **Adobe Reader/Acrobat** legitimate operations
-- **AXIS Camera Station** maintenance scripts
-- **NinjaRMM/NinjaOne** remote management activities
-- **Windows Update** processes (TiWorker, DISM)
-- **ManageEngine** legitimate network discovery
-- **Cisco AnyConnect** VPN operations
+- **📄 Adobe Reader/Acrobat** legitimate operations
+- **📹 AXIS Camera Station** maintenance scripts
+- **🔧 NinjaRMM/NinjaOne** remote management activities
+- **🔄 Windows Update** processes (TiWorker, DISM)
+- **🖥️ ManageEngine** legitimate network discovery
+- **🔐 Cisco AnyConnect** VPN operations
 
-### Rule Structure
+### 📝 Rule Structure
 
 Each rule can contain multiple conditions:
 
@@ -72,7 +87,7 @@ Each rule can contain multiple conditions:
 </Rule>
 ```
 
-**Condition Types:**
+**🔍 Condition Types:**
 - `is`: Exact match
 - `contains`: Substring match
 - `contains any`: Match any of the specified values (separated by semicolon)
@@ -80,92 +95,111 @@ Each rule can contain multiple conditions:
 - `begin with`: Starts with specified string
 - `end with`: Ends with specified string
 
-**groupRelation:**
+**🔗 groupRelation:**
 - `and`: All conditions in the rule must be true
 - `or`: At least one condition must be true
 
-## Detection Categories
+## 🎯 Detection Categories
 
-### 1. Process Creation Monitoring (Event ID 1)
+### 1. 🔍 Process Creation Monitoring (Event ID 1)
 The configuration monitors suspicious process creation patterns including:
-- Accessibility feature abuse
-- UAC bypass attempts
-- Living-off-the-land binary abuse
-- PowerShell and command line execution
-- Credential dumping tools
-- System recovery inhibition
+- 🔓 Accessibility feature abuse
+- 🛡️ UAC bypass attempts
+- ⚡ Living-off-the-land binary abuse
+- 💻 PowerShell and command line execution
+- 🔑 Credential dumping tools
+- 🚫 System recovery inhibition
 
-### 2. Legitimate Software Exclusions
+### 2. ✅ Legitimate Software Exclusions
 To reduce false positives, the configuration excludes known legitimate activities from:
-- Security tools (antivirus, monitoring agents)
-- System maintenance tools
-- Enterprise software (Adobe, ManageEngine, etc.)
-- Windows system processes
+- 🛡️ Security tools (antivirus, monitoring agents)
+- 🔧 System maintenance tools
+- 🏢 Enterprise software (Adobe, ManageEngine, etc.)
+- 🖥️ Windows system processes
 
-## MITRE ATT&CK Coverage
+## 🎯 MITRE ATT&CK Coverage
 
 This configuration provides detection coverage for the following MITRE ATT&CK tactics:
-- **Initial Access**
-- **Execution**
-- **Persistence**
-- **Privilege Escalation**
-- **Defense Evasion**
-- **Credential Access**
-- **Discovery**
-- **Collection**
-- **Command and Control**
-- **Exfiltration**
-- **Impact**
+- 🚪 **Initial Access**
+- ⚡ **Execution**
+- 🔄 **Persistence**
+- ⬆️ **Privilege Escalation**
+- 🥷 **Defense Evasion**
+- 🔑 **Credential Access**
+- 🔍 **Discovery**
+- 📂 **Collection**
+- 🌐 **Command and Control**
+- 📤 **Exfiltration**
+- 💥 **Impact**
 
-## Usage
+## 🚀 Usage
 
-### Installation
+### 📦 Installation
 1. Install Sysmon on the target system
 2. Apply the configuration:
    ```cmd
    sysmon.exe -accepteula -i sysmon_config.xml
    ```
 
-### Updating Configuration
+### 🔄 Updating Configuration
 ```cmd
 sysmon.exe -c sysmon_config.xml
 ```
 
-### Integration with Wazuh
+### 🔗 Integration with Wazuh
 The events generated by this configuration should be forwarded to Wazuh for centralized analysis and correlation. Ensure that:
-1. Wazuh agent is configured to monitor Sysmon logs
-2. Appropriate Wazuh rules are in place to parse and analyze Sysmon events
-3. MITRE ATT&CK framework integration is enabled in Wazuh
+1. 🔧 Wazuh agent is configured to monitor Sysmon logs
+2. 📋 Appropriate Wazuh rules are in place to parse and analyze Sysmon events
+3. 🎯 MITRE ATT&CK framework integration is enabled in Wazuh
 
-## Performance Considerations
+## ⚡ Performance Considerations
 
-- DNS lookups are disabled to improve performance
-- Certificate revocation checking is disabled
-- Exclusion rules are implemented to reduce log volume
-- Hash algorithms are optimized for security vs. performance balance
+- 🚫 DNS lookups are disabled to improve performance
+- 🔐 Certificate revocation checking is disabled
+- 📝 Exclusion rules are implemented to reduce log volume
+- #️⃣ Hash algorithms are optimized for security vs. performance balance
 
-## Maintenance
+## 🔧 Maintenance
 
 Regular updates should be made to:
-1. Add new threat detection patterns
-2. Update exclusion rules for new legitimate software
-3. Align with latest MITRE ATT&CK framework updates
-4. Optimize performance based on environment feedback
+1. ➕ Add new threat detection patterns
+2. 🔄 Update exclusion rules for new legitimate software
+3. 🎯 Align with latest MITRE ATT&CK framework updates
+4. ⚡ Optimize performance based on environment feedback
 
-## License
+## 📜 License
 
 This configuration is provided under the same license as specified in the LICENSE file.
 
-## Contributing
+## 🤝 Contributing
 
 When contributing to this configuration:
-1. Test thoroughly in a lab environment
-2. Document new detection rules with MITRE ATT&CK technique IDs
-3. Ensure exclusion rules are specific enough to avoid bypasses
-4. Update this README with any significant changes
+1. 🧪 Test thoroughly in a lab environment
+2. 📋 Document new detection rules with MITRE ATT&CK technique IDs
+3. 🔒 Ensure exclusion rules are specific enough to avoid bypasses
+4. 📝 Update this README with any significant changes
 
-## References
+## 📚 References
 
-- [Sysmon Documentation](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
-- [MITRE ATT&CK Framework](https://attack.mitre.org/)
-- [Wazuh Documentation](https://documentation.wazuh.com/)
+- 📖 [Sysmon Documentation](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
+- 🎯 [MITRE ATT&CK Framework](https://attack.mitre.org/)
+- 🛡️ [Wazuh Documentation](https://documentation.wazuh.com/)
+
+---
+
+### 🏢 About GOLINE SA
+
+**GOLINE SA** is a leading cybersecurity company specializing in advanced threat detection, SIEM solutions, and security monitoring. We provide comprehensive security services to protect organizations from evolving cyber threats.
+
+**Website:** [https://www.goline.ch](https://www.goline.ch)  
+**Contact:** For questions about this configuration, please reach out through our official channels.
+
+---
+
+<div align="center">
+
+**🛡️ Developed with ❤️ by GOLINE SA Security Team**
+
+[![GOLINE SA](https://img.shields.io/badge/GOLINE%20SA-Cybersecurity%20Solutions-blue.svg)](https://www.goline.ch)
+
+</div>
