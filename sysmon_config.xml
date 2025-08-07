@@ -675,7 +675,7 @@ contact GOLINE SA at https://www.goline.ch
       <ParentImage condition="is">C:\Windows\System32\CompatTelRunner.exe</ParentImage>
       <Image condition="is">C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Image>
       <CommandLine condition="contains">-ExecutionPolicy Restricted</CommandLine>
-      <User condition="is">NT AUTHORITY\SYSTEM</User>
+      <User condition="contains any">NT AUTHORITY\SYSTEM;NT-AUTORITÄT\SYSTEM</User>
     </Rule>
         <!-- Adobe - Esclusioni più sicure con verifica percorso completo -->
         <Rule groupRelation="and">
