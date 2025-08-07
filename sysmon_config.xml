@@ -79,10 +79,10 @@ For professional cybersecurity services and custom SIEM implementations,
 contact GOLINE SA at https://www.goline.ch
 
 ################################################################################
-#                                                                              #
-#        Developed with ❤️ by GOLINE SA Security Team - Switzerland 🇨🇭          #
-#            "Protecting Organizations from Evolving Cyber Threats"           #
-#                                                                              #
+                                                                              
+         Developed with ❤️ by GOLINE SA Security Team - Switzerland 🇨🇭        
+             "Protecting Organizations from Evolving Cyber Threats"           
+                                                                              
 ################################################################################
 -->
 
@@ -3626,6 +3626,7 @@ contact GOLINE SA at https://www.goline.ch
     </RuleGroup>
   </EventFiltering>
 </Sysmon>
+
 
 
 
