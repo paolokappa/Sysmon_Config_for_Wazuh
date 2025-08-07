@@ -1810,7 +1810,8 @@ contact GOLINE SA at https://www.goline.ch
       <SourceUser condition="contains any">
       \Kappa;
       \svc_dc;
-      \Administrator
+      \Administrator;
+      BUONVICINI_TI1\Administrator
       </SourceUser>
     </Rule>
     <!-- NinjaRMM Agent accesso legittimo a Explorer -->
