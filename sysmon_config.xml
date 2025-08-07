@@ -940,6 +940,15 @@ contact GOLINE SA at https://www.goline.ch
             <CommandLine condition="contains all">reg query;HKLM\HARDWARE\DESCRIPTION\System\CentralProcessor</CommandLine>
             <User condition="is">NT AUTHORITY\SYSTEM</User>
         </Rule>
+        <!-- Wazuh Agent upgrade process - PowerShell script do_upgrade.ps1 -->
+        <Rule groupRelation="and">
+            <ParentImage condition="contains">\ossec-agent\</ParentImage>
+            <ParentImage condition="end with">\powershell.exe</ParentImage>
+            <ParentCommandLine condition="contains">do_upgrade.ps1</ParentCommandLine>
+            <Image condition="end with">\powershell.exe</Image>
+            <CommandLine condition="contains">-encodedCommand</CommandLine>
+            <User condition="is">NT AUTHORITY\SYSTEM</User>
+        </Rule>
       </ProcessCreate>
     </RuleGroup>
     <!-- Event ID 2 == File Creation Time - Includes -->
@@ -2243,6 +2252,12 @@ contact GOLINE SA at https://www.goline.ch
       <Image condition="is">C:\WINDOWS\system32\msiexec.exe</Image>
       <TargetFilename condition="contains">\Program Files (x86)\dotnet\</TargetFilename>
       <TargetFilename condition="end with">.dll</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
+    <!-- Wazuh Agent installazione/aggiornamento legittimo -->
+    <Rule groupRelation="and">
+      <Image condition="is">C:\WINDOWS\system32\msiexec.exe</Image>
+      <TargetFilename condition="contains any">\Windows\Temp\wazuh-agent-;\Windows\Temp\PFiles\ossec-agent\</TargetFilename>
       <User condition="is">NT AUTHORITY\SYSTEM</User>
     </Rule>
     <!-- Windows Defender MpSigStub aggiornamento definizioni -->
