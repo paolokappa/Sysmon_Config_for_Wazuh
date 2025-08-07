@@ -2076,7 +2076,7 @@ contact GOLINE SA at https://www.goline.ch
     
             <!-- Office che crea LNK in tutte le cartelle Microsoft legittime -->
         <Rule groupRelation="and">
-            <Image condition="contains any">\Office16\EXCEL.EXE;\Office16\WINWORD.EXE;\Office16\POWERPNT.EXE;\Office16\OUTLOOK.EXE</Image>
+            <Image condition="contains any">\Office16\EXCEL.EXE;\Office16\WINWORD.EXE;\Office16\POWERPNT.EXE;\Office16\OUTLOOK.EXE;\Office16\MSACCESS.EXE;\Office16\MSPUB.EXE</Image>
             <TargetFilename condition="contains">\AppData\Roaming\Microsoft\</TargetFilename>
             <TargetFilename condition="end with">.lnk</TargetFilename>
         </Rule>
