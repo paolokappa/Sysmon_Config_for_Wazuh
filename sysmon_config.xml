@@ -1,3 +1,100 @@
+<!--
+================================================================================
+                    ╔═══════════════════════════════════════════════════════╗
+                    ║           🛡️  SYSMON CONFIGURATION FOR WAZUH  🛡️        ║
+                    ║                   ENTERPRISE SECURITY SOLUTION           ║
+                    ╚═══════════════════════════════════════════════════════╝
+
+    ┌─────────────────────────────────────────────────────────────────────────┐
+    │  🏢 COMPANY:     GOLINE SA - Cybersecurity & SIEM Solutions            │
+    │  👨‍💻 AUTHOR:      Paolo Kappa (Paolo Caparrelli)                        │
+    │  🌐 WEBSITE:     https://www.goline.ch                                 │
+    │  📧 EMAIL:       security@goline.ch                                    │
+    │  📅 VERSION:     2025.1.0                                              │
+    │  🔄 UPDATED:     August 2025                                           │
+    └─────────────────────────────────────────────────────────────────────────┘
+
+    ┌─────────────────────────────────────────────────────────────────────────┐
+    │  📋 DESCRIPTION:                                                        │
+    │     Advanced Sysmon configuration optimized for enterprise             │
+    │     environments with comprehensive threat detection based on          │
+    │     MITRE ATT&CK framework. Designed for seamless integration         │
+    │     with Wazuh SIEM platform.                                         │
+    │                                                                         │
+    │  🎯 FEATURES:                                                           │
+    │     ✅ MITRE ATT&CK Framework Mapped Detection Rules                   │
+    │     ✅ Process Creation Monitoring (Event ID 1)                        │
+    │     ✅ Optimized for Production Environments                           │
+    │     ✅ False Positive Reduction via Smart Exclusions                   │
+    │     ✅ Performance Optimized Settings                                  │
+    │     ✅ Enterprise Software Compatibility                               │
+    │                                                                         │
+    │  🔧 SUPPORTED TECHNIQUES:                                               │
+    │     • T1546.008 - Accessibility Features                              │
+    │     • T1548.002 - Bypass User Access Control                          │
+    │     • T1218.*** - System Binary Proxy Execution                       │
+    │     • T1059.*** - Command and Scripting Interpreter                   │
+    │     • T1003.*** - OS Credential Dumping                               │
+    │     • T1105     - Ingress Tool Transfer                                │
+    │     • T1490     - Inhibit System Recovery                              │
+    │     • T1036     - Masquerading                                         │
+    │     • And 50+ additional MITRE ATT&CK techniques...                   │
+    └─────────────────────────────────────────────────────────────────────────┘
+
+    ┌─────────────────────────────────────────────────────────────────────────┐
+    │  ⚡ PERFORMANCE OPTIMIZATIONS:                                          │
+    │     • DNS lookups disabled for improved performance                    │
+    │     • Certificate revocation checking disabled                         │
+    │     • Smart exclusion rules for legitimate enterprise software        │
+    │     • Optimized hash algorithms configuration                          │
+    │                                                                         │
+    │  🛡️ EXCLUSIONS FOR LEGITIMATE SOFTWARE:                                │
+    │     • Adobe Reader/Acrobat Suite                                      │
+    │     • AXIS Camera Station Management                                   │
+    │     • NinjaRMM/NinjaOne Remote Management                             │
+    │     • Windows Update & System Maintenance                             │
+    │     • ManageEngine Enterprise Tools                                   │
+    │     • Cisco AnyConnect VPN Client                                     │
+    │     • Microsoft Office Suite                                          │
+    │     • Antivirus & Security Tools                                      │
+    └─────────────────────────────────────────────────────────────────────────┘
+
+    ┌─────────────────────────────────────────────────────────────────────────┐
+    │  📚 INSTALLATION INSTRUCTIONS:                                         │
+    │                                                                         │
+    │  For 64-bit systems (recommended):                                     │
+    │     sysmon64.exe -i sysmon_config.xml                                 │
+    │                                                                         │
+    │  For 32-bit systems:                                                   │
+    │     sysmon.exe -accepteula -i sysmon_config.xml                       │
+    │                                                                         │
+    │  Update existing configuration:                                        │
+    │     sysmon64.exe -c sysmon_config.xml                                 │
+    └─────────────────────────────────────────────────────────────────────────┘
+
+    ┌─────────────────────────────────────────────────────────────────────────┐
+    │  ⚠️  DISCLAIMER:                                                        │
+    │     This configuration is provided for professional security          │
+    │     monitoring purposes. Ensure compliance with all applicable        │
+    │     laws and regulations in your jurisdiction. Test thoroughly        │
+    │     in a lab environment before production deployment.                │
+    │                                                                         │
+    │  📜 LICENSE:                                                            │
+    │     MIT License - See LICENSE file for full terms                     │
+    │                                                                         │
+    │  🔗 SUPPORT:                                                            │
+    │     For professional cybersecurity services and custom SIEM           │
+    │     implementations, contact GOLINE SA at https://www.goline.ch       │
+    └─────────────────────────────────────────────────────────────────────────┘
+
+    ╔═══════════════════════════════════════════════════════════════════════════╗
+    ║  🛡️ Developed with ❤️ by GOLINE SA Security Team - Switzerland 🇨🇭        ║
+    ║     "Protecting Organizations from Evolving Cyber Threats"               ║
+    ╚═══════════════════════════════════════════════════════════════════════════╝
+
+================================================================================
+-->
+
 <Sysmon schemaversion="4.90">
   <HashAlgorithms>*</HashAlgorithms>
   <!-- This now also determines the file names of the files preserved (String) -->
