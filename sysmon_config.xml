@@ -1918,6 +1918,12 @@ contact GOLINE SA at https://www.goline.ch
       <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
       <GrantedAccess condition="contains any">0x40;0x1410</GrantedAccess>
     </Rule>
+    <!-- MirusHR30 Java application accesso a Explorer per integrazione shell -->
+    <Rule groupRelation="and">
+      <SourceImage condition="contains">\MirusHR30\jre\bin\javaw.exe</SourceImage>
+      <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+      <GrantedAccess condition="is">0x40</GrantedAccess>
+    </Rule>
         <SourceImage condition="is">C:\Program Files (x86)\VMware\VMWare Player\vmware-authd.exe</SourceImage>
         <SourceImage condition="is">C:\Program Files (x86)\VMware\VMware Workstation\vmware-authd.exe</SourceImage>
         <SourceImage condition="is">C:\Program Files\WinZip\FAHWindow64.exe</SourceImage>
