@@ -1500,6 +1500,12 @@ contact GOLINE SA at https://www.goline.ch
     <ImageLoaded condition="contains">System.Management.Automation</ImageLoaded>
     <Signed condition="is">false</Signed>
     </Rule>
+    <!-- Exchange Store Worker che carica PowerShell per operazioni legittime -->
+    <Rule groupRelation="and">
+    <Image condition="contains">\Exchange Server\V15\Bin\Microsoft.Exchange.Store.Worker.exe</Image>
+    <ImageLoaded condition="contains">System.Management.Automation</ImageLoaded>
+    <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
     <!-- WinRM host che carica PowerShell per remoting legittimo -->
     <Rule groupRelation="and">
     <Image condition="is">C:\Windows\System32\wsmprovhost.exe</Image>
@@ -1897,6 +1903,12 @@ contact GOLINE SA at https://www.goline.ch
     <!-- VS Code accesso a Explorer per integrazione shell/taskbar -->
     <Rule groupRelation="and">
       <SourceImage condition="contains all">C:\Users\;\AppData\Local\Programs\Microsoft VS Code\Code.exe</SourceImage>
+      <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+      <GrantedAccess condition="contains any">0x40;0x1410</GrantedAccess>
+    </Rule>
+    <!-- Windsurf (VS Code fork) accesso a Explorer per integrazione shell/taskbar -->
+    <Rule groupRelation="and">
+      <SourceImage condition="contains all">C:\Users\;\AppData\Local\Programs\Windsurf\Windsurf.exe</SourceImage>
       <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
       <GrantedAccess condition="contains any">0x40;0x1410</GrantedAccess>
     </Rule>
