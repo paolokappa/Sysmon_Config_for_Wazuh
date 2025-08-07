@@ -1693,9 +1693,9 @@ contact GOLINE SA at https://www.goline.ch
         </Rule>
         <!-- Windows Error Reporting (WerFault) accesso legittimo per dump diagnostici -->
         <Rule groupRelation="and">
-            <SourceImage condition="is">C:\WINDOWS\system32\WerFault.exe</SourceImage>
+            <SourceImage condition="contains any">C:\WINDOWS\system32\WerFault.exe;C:\WINDOWS\SysWOW64\WerFault.exe</SourceImage>
             <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
-            <GrantedAccess condition="contains any">0x1FFFFF;0x1F3FFF</GrantedAccess>
+            <GrantedAccess condition="contains any">0x1FFFFF;0x1F3FFF;0x1410</GrantedAccess>
         </Rule>
         <!-- Intel System Usage Report (SUR) - Servizio legittimo Intel -->
         <Rule groupRelation="and">
