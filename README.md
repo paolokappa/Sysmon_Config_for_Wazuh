@@ -135,13 +135,31 @@ This configuration provides detection coverage for the following MITRE ATT&CK ta
 ## 🚀 Usage
 
 ### 📦 Installation
-1. Install Sysmon on the target system
-2. Apply the configuration:
+1. **Download Sysmon** from Microsoft Sysinternals
+2. **Extract the files** to a folder (you'll find both `sysmon.exe` and `sysmon64.exe`)
+3. **Install Sysmon as a service** with the configuration:
+
+   **For 64-bit systems (recommended):**
+   ```cmd
+   sysmon64.exe -i sysmon_config.xml
+   ```
+   
+   **For 32-bit systems:**
    ```cmd
    sysmon.exe -accepteula -i sysmon_config.xml
    ```
 
+   > **Note:** The `-accepteula` parameter is only needed on the first installation to accept the license agreement.
+
 ### 🔄 Updating Configuration
+To update an existing Sysmon installation with a new configuration:
+
+**For 64-bit systems:**
+```cmd
+sysmon64.exe -c sysmon_config.xml
+```
+
+**For 32-bit systems:**
 ```cmd
 sysmon.exe -c sysmon_config.xml
 ```
