@@ -2190,6 +2190,41 @@ contact GOLINE SA at https://www.goline.ch
       <TargetFilename condition="end with">.dll</TargetFilename>
       <User condition="is">NT AUTHORITY\SYSTEM</User>
     </Rule>
+    <!-- Windows Desktop Runtime installer - file EXE temporanei -->
+    <Rule groupRelation="and">
+      <Image condition="contains all">\Windows\Temp\;\.cr\;windowsdesktop-runtime-</Image>
+      <TargetFilename condition="contains all">\Windows\Temp\;\.be\;windowsdesktop-runtime-</TargetFilename>
+      <TargetFilename condition="end with">.exe</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
+    <!-- .NET Runtime installer - file EXE temporanei -->
+    <Rule groupRelation="and">
+      <Image condition="contains all">\Windows\Temp\;\.cr\;dotnet-runtime-</Image>
+      <TargetFilename condition="contains all">\Windows\Temp\;\.be\;dotnet-runtime-</TargetFilename>
+      <TargetFilename condition="end with">.exe</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
+    <!-- Windows Desktop Runtime installer - MSI files -->
+    <Rule groupRelation="and">
+      <Image condition="contains all">\Windows\Temp\;\.cr\;windowsdesktop-runtime-</Image>
+      <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
+      <TargetFilename condition="end with">.msi</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
+    <!-- .NET Runtime installer da Package Cache -->
+    <Rule groupRelation="and">
+      <Image condition="contains all">\ProgramData\Package Cache\;dotnet-runtime-</Image>
+      <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
+      <TargetFilename condition="contains any">\.ba\;\.be\</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
+    <!-- Windows Desktop Runtime installer da Package Cache -->
+    <Rule groupRelation="and">
+      <Image condition="contains all">\ProgramData\Package Cache\;windowsdesktop-runtime-</Image>
+      <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
+      <TargetFilename condition="contains any">\.ba\;\.be\</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
     <!-- Windows Recovery Environment - caso specifico del tuo log -->
     <Rule groupRelation="and">
       <Image condition="contains">\$WinREAgent\Scratch\</Image>
