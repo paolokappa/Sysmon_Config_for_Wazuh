@@ -2119,6 +2119,12 @@ contact GOLINE SA at https://www.goline.ch
             <TargetFilename condition="contains">\AppData\Roaming\Microsoft\Excel\</TargetFilename>
             <TargetFilename condition="end with">.lnk</TargetFilename>
         </Rule>
+    <!-- DYMO Label Printer software che crea file temporanei .NET -->
+    <Rule groupRelation="and">
+      <Image condition="contains">\DYMO\DYMO Connect\DYMO.WebApi.Win.Host.exe</Image>
+      <TargetFilename condition="contains all">\AppData\Local\Temp\.net\;DYMO</TargetFilename>
+      <TargetFilename condition="end with">.exe</TargetFilename>
+    </Rule>
     <!-- Telegram auto-update process -->
     <Rule groupRelation="and">
       <Image condition="contains">\Telegram Desktop\Telegram.exe</Image>
