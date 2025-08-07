@@ -1840,6 +1840,12 @@ contact GOLINE SA at https://www.goline.ch
       <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
       <GrantedAccess condition="is">0x1f3fff</GrantedAccess>
     </Rule>
+    <!-- Dell Display and Peripheral Manager accesso legittimo a Explorer -->
+    <Rule groupRelation="and">
+      <SourceImage condition="contains">\Dell\Dell Display and Peripheral Manager\Plugins\DDPM.Subagent.User\DDPM.Subagent.User.exe</SourceImage>
+      <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+      <GrantedAccess condition="is">0x1410</GrantedAccess>
+    </Rule>
     <!-- Wacom Tablet Service accesso a Explorer per gestione tavoletta grafica -->
     <Rule groupRelation="and">
       <SourceImage condition="contains">\WTabletServiceISD.exe</SourceImage>
