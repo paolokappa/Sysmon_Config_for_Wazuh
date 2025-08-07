@@ -783,6 +783,12 @@ contact GOLINE SA at https://www.goline.ch
         <Image condition="end with">C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe</Image>
         <ParentImage condition="end with">C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe</ParentImage>
         <Image condition="is">C:\Program Files\ESET\ESET Nod32 Antivirus\ekrn.exe</Image>
+        <!-- ESET Security eServiceHost.exe che controlla utenti disconnessi -->
+        <Rule groupRelation="and">
+            <ParentImage condition="contains">\ESET\ESET Security\eServiceHost.exe</ParentImage>
+            <Image condition="is">C:\Windows\System32\cmd.exe</Image>
+            <CommandLine condition="contains all">query.exe;user;find;Disc</CommandLine>
+        </Rule>
         <CommandLine condition="begin with">"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --type=</CommandLine>
         <CommandLine condition="begin with">"C:\Program Files\Google\Chrome\Application\chrome.exe" --type=</CommandLine>
         <Image condition="begin with">C:\Program Files (x86)\Google\Update\</Image>
