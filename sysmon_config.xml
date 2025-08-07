@@ -2330,6 +2330,13 @@ contact GOLINE SA at https://www.goline.ch
     <TargetFilename condition="contains">\Google\Chrome\Temp\</TargetFilename>
     <TargetFilename condition="end with">.exe</TargetFilename>
     </Rule>
+    <!-- Google Chrome update process da SystemTemp con pattern variabili -->
+    <Rule groupRelation="and">
+      <Image condition="contains all">\SystemTemp\Google;setup.exe</Image>
+      <TargetFilename condition="contains">\Google\Chrome\Temp\</TargetFilename>
+      <TargetFilename condition="end with">.exe</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
         <Rule groupRelation="and">
           <Image condition="begin with">C:\Program Files\Elastic\Agent\data\</Image>
           <TargetFilename condition="contains all">C:\Program Files\Elastic\Agent\data\;.ndjson</TargetFilename>
