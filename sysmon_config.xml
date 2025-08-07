@@ -921,6 +921,11 @@ contact GOLINE SA at https://www.goline.ch
         <Image condition="is">C:\Windows\System32\wermgr.exe</Image>
         <Image condition="is">C:\Windows\SysWOW64\wermgr.exe</Image>
         <Image condition="is">C:\Windows\system32\sppsvc.exe</Image>
+        <!-- Explorer che avvia nuova istanza di Explorer - comportamento normale Windows -->
+        <Rule groupRelation="and">
+          <ParentImage condition="is">C:\Windows\explorer.exe</ParentImage>
+          <Image condition="is">C:\Windows\explorer.exe</Image>
+        </Rule>
         <!-- PsShutdown - Sysinternals tool per spegnimento programmato PC aziendali -->
         <Image condition="is">C:\Windows\PSSDNSVC.EXE</Image>
         <Image condition="contains">psshutdown.exe</Image>
@@ -1401,6 +1406,12 @@ contact GOLINE SA at https://www.goline.ch
             <Image condition="contains">wa_3rd_party_host</Image>
             <ImageLoaded condition="contains">System.Management.Automation</ImageLoaded>
         </Rule>
+        <!-- NinjaRMM app-patching-ops wa_3rd_party_host PowerShell usage - patching legittimo -->
+        <Rule groupRelation="and">
+            <Image condition="contains all">NinjaRMMAgent\components\app-patching-ops\;wa_3rd_party_host</Image>
+            <ImageLoaded condition="contains">System.Management.Automation</ImageLoaded>
+            <User condition="is">NT AUTHORITY\SYSTEM</User>
+        </Rule>
         <Rule groupRelation="and">
           <Image condition="is">powershell.exe</Image>
           <OriginalFileName condition="excludes">mscoree.dll</OriginalFileName>
@@ -1414,6 +1425,11 @@ contact GOLINE SA at https://www.goline.ch
         <Rule groupRelation="and">
           <Image condition="end with">mscorsvw.exe</Image>
           <ImageLoaded condition="contains">\assembly\NativeImages_</ImageLoaded>
+        </Rule>
+        <!-- mscorsvw.exe carica System.Management.Automation dalla GAC durante ottimizzazione .NET -->
+        <Rule groupRelation="and">
+          <Image condition="end with">mscorsvw.exe</Image>
+          <ImageLoaded condition="contains all">\assembly\GAC_MSIL\System.Management.Automation\</ImageLoaded>
         </Rule>
         <Rule groupRelation="and">
           <Image name="technique_id=T1137,technique_name=Office Application Startup" condition="end with">VSTOInstaller.exe</Image>
@@ -2112,6 +2128,14 @@ contact GOLINE SA at https://www.goline.ch
       <TargetFilename condition="contains any">MXDWDRV.DLL;PS5UI.DLL;PSCRIPT5.DLL;UNIDRV.DLL;UNIDRVUI.DLL;mxdwdui.dll;PrintConfig.dll;MXDWDRV.dll;PS5UI.dll;PSCRIPT5.dll;UNIDRV.dll;UNIDRVUI.dll;PrintConfig.DLL</TargetFilename>
       <User condition="is">NT AUTHORITY\SYSTEM</User>
     </Rule>
+    <!-- HP Print Spooler - Driver HP legittimi -->
+    <Rule groupRelation="and">
+      <Image condition="is">C:\WINDOWS\System32\spoolsv.exe</Image>
+      <TargetFilename condition="contains all">\spool\drivers\;V4Connections\</TargetFilename>
+      <TargetFilename condition="contains">HP.OneDriver</TargetFilename>
+      <TargetFilename condition="end with">.dll</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
     
             <!-- Office che crea LNK in tutte le cartelle Microsoft legittime -->
         <Rule groupRelation="and">
@@ -2217,6 +2241,13 @@ contact GOLINE SA at https://www.goline.ch
       <Image condition="contains">\SoftwareDistribution\Download\Install\</Image>
       <TargetFilename condition="contains all">\Windows\Temp\{;}\\.cr\\</TargetFilename>
       <TargetFilename condition="end with">.exe</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
+    <!-- Windows Update Platform - UpdatePlatform.amd64fre.exe che installa Defender updates -->
+    <Rule groupRelation="and">
+      <Image condition="contains">\SoftwareDistribution\Download\Install\UpdatePlatform.amd64fre.exe</Image>
+      <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
+      <TargetFilename condition="end with">.dll</TargetFilename>
       <User condition="is">NT AUTHORITY\SYSTEM</User>
     </Rule>
     <!-- Windows Desktop Runtime installer con Burn framework -->
@@ -2517,6 +2548,11 @@ contact GOLINE SA at https://www.goline.ch
   <Image condition="contains">\TeamViewer\Update\update.exe</Image>
   <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
   <TargetFilename condition="contains any">.dll;.exe;.tmp</TargetFilename>
+  </Rule>
+  <!-- TeamViewer.exe che crea update.exe nella sua cartella temp -->
+  <Rule groupRelation="and">
+  <Image condition="contains">\TeamViewer\TeamViewer.exe</Image>
+  <TargetFilename condition="contains all">\AppData\Local\Temp\TeamViewer\;update.exe</TargetFilename>
   </Rule>
   <!-- Windows Application Compatibility Scripts - acregl.exe -->
   <Rule groupRelation="and">
@@ -3781,6 +3817,12 @@ contact GOLINE SA at https://www.goline.ch
         <Rule groupRelation="and">
           <SourceImage condition="contains all">is-;.tmp;VSCodeSetup</SourceImage>
           <TargetImage condition="contains">Explorer.EXE</TargetImage>
+        </Rule>
+        <!-- VS Code installer CodeSetup accessing Explorer - installer legittimo -->
+        <Rule groupRelation="and">
+          <SourceImage condition="contains all">\AppData\Local\Temp\;CodeSetup-stable;.tmp</SourceImage>
+          <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+          <GrantedAccess condition="is">0x40</GrantedAccess>
         </Rule>
         <!-- VS Code stesso che accede a Explorer -->
         <Rule groupRelation="and">
