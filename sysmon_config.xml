@@ -1651,6 +1651,13 @@ contact GOLINE SA at https://www.goline.ch
             <GrantedAccess condition="is">0x1410</GrantedAccess>
             <SourceUser condition="is">NT AUTHORITY\SYSTEM</SourceUser>
         </Rule>
+        <!-- AutoModeDetect.exe accesso da utenti normali -->
+        <Rule groupRelation="and">
+            <SourceImage condition="is">C:\WINDOWS\system32\AutoModeDetect.exe</SourceImage>
+            <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+            <GrantedAccess condition="is">0x1410</GrantedAccess>
+            <SourceUser condition="contains">\</SourceUser>
+        </Rule>
         <!-- Esclusione: Alienware Command Center -->
         <!-- AWCC monitora Explorer per l'interfaccia utente e le notifiche -->
         <Rule groupRelation="and">
