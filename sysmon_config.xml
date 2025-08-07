@@ -1671,6 +1671,12 @@ contact GOLINE SA at https://www.goline.ch
             <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
             <GrantedAccess condition="is">0x1410</GrantedAccess>  <!-- VALORE CORRETTO -->
         </Rule>
+        <!-- Microsoft OneDrive accesso legittimo a Explorer -->
+        <Rule groupRelation="and">
+            <SourceImage condition="contains all">C:\Users\;\AppData\Local\Microsoft\OneDrive\;\OneDrive.exe</SourceImage>
+            <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+            <GrantedAccess condition="contains any">0x1410;0x101411;0x1411</GrantedAccess>
+        </Rule>
         <!-- Intel System Usage Report (SUR) - Servizio legittimo Intel -->
         <Rule groupRelation="and">
             <SourceImage condition="contains">\Intel\SUR\</SourceImage>
