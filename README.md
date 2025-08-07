@@ -69,6 +69,16 @@ System Monitor (Sysmon) is a Windows system service and device driver that logs 
 - **💉 Process Injection:** Memory manipulation detection
 - **🎯 Advanced Filtering:** Granular access rights monitoring
 
+##### Notable Exclusions (False Positive Suppression)
+
+- **AutoModeDetect.exe**: Legitimate access to Explorer.exe for display mode detection (0x1410)
+- **OneDrive.exe**: Explorer integration and sync (various access rights)
+- **WerFault.exe**: Diagnostic dump access to Explorer.exe
+- **Dell, Intel, Cisco, WebEx, TeamViewer, Telegram, ProtonDrive, PowerShell (admin)**: All have targeted exclusions for legitimate Explorer.exe access
+- **Zero Install/0install.exe**: Shell integration (0x40)
+- **DeepL.exe (installed via 0install)**: Legitimate access to Explorer.exe for translation/shell integration (0x1410)
+    - **Rule:** Excludes ProcessAccess where `SourceImage` contains `\\DeepL\\DeepL.exe` or `\\0install.net\\`, `TargetImage` is `C:\WINDOWS\Explorer.EXE`, and `GrantedAccess` is `0x1410` (suppresses T1055.001/Process Injection false positives for DeepL)
+
 #### **Event ID 11 - FileCreate**
 - **🚨 Malicious Files:** Executable, script, and document creation
 - **📁 Suspicious Locations:** Temp folders, system directories

@@ -1867,6 +1867,12 @@ contact GOLINE SA at https://www.goline.ch
       <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
       <GrantedAccess condition="is">0x40</GrantedAccess>
     </Rule>
+        <!-- DeepL.exe (0install) accesso legittimo a Explorer per integrazione shell/traduzione -->
+        <Rule groupRelation="and">
+          <SourceImage condition="contains any">\\DeepL\\DeepL.exe;\\0install.net\\</SourceImage>
+          <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+          <GrantedAccess condition="is">0x1410</GrantedAccess>
+        </Rule>
         <!-- Synology USB Client Service accesso a vari processi -->
     <Rule groupRelation="and">
     <SourceImage condition="contains">\Synology\Assistant\UsbClientService.exe</SourceImage>
