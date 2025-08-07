@@ -577,6 +577,13 @@ contact GOLINE SA at https://www.goline.ch
         <Rule groupRelation="and">
             <CommandLine condition="contains all">RemoteExecM2.exe;ZDSync</CommandLine>
         </Rule>
+        <!-- ADSelfService Plus Enrollment via Group Policy -->
+        <Rule groupRelation="and">
+            <Image condition="end with">\mshta.exe</Image>
+            <CommandLine condition="contains">ADSelfService_Enroll.hta</CommandLine>
+            <ParentImage condition="end with">\mshta.exe</ParentImage>
+            <ParentCommandLine condition="contains all">SysVol;Policies;User\Scripts\Logon\ADSelfService_Enroll.hta</ParentCommandLine>
+        </Rule>
     <!-- Eccezione 1: AXIS Camera Station - PowerShell status.ps1 -->
         <Rule groupRelation="and">
           <ParentImage condition="contains">Axis Communications\AXIS Camera Station\Core\Server</ParentImage>
@@ -1484,6 +1491,23 @@ contact GOLINE SA at https://www.goline.ch
     <ImageLoaded condition="contains">System.Management.Automation</ImageLoaded>
     <Signed condition="is">false</Signed>
     </Rule>
+    <!-- Veritas Backup Exec RAWS wrapper che carica PowerShell per operazioni di backup -->
+    <Rule groupRelation="and">
+    <Image condition="contains">\Veritas\Backup Exec\RAWS\spswrapperv7.exe</Image>
+    <ImageLoaded condition="contains">System.Management.Automation</ImageLoaded>
+    <User condition="contains">\svc_dc</User>
+    </Rule>
+    <!-- Veritas Backup Exec monad.exe che carica PowerShell per operazioni di backup -->
+    <Rule groupRelation="and">
+    <Image condition="contains">\Veritas\Backup Exec\RAWS\monad.exe</Image>
+    <ImageLoaded condition="contains">System.Management.Automation</ImageLoaded>
+    <User condition="contains">\svc_dc</User>
+    </Rule>
+    <!-- HP Sure Click che carica PowerShell per operazioni di sicurezza -->
+    <Rule groupRelation="and">
+    <Image condition="contains">\HP\Sure Click\servers\BrConsole.exe</Image>
+    <ImageLoaded condition="contains">System.Management.Automation</ImageLoaded>
+    </Rule>
     
         <Rule groupRelation="and">
           <Image condition="is">C:\Windows\System32\svchost.exe</Image>
@@ -1561,8 +1585,9 @@ contact GOLINE SA at https://www.goline.ch
           <CallTrace condition="contains">\Microsoft Shared\VBA</CallTrace>
         </Rule>
         <Rule groupRelation="and">
-          <CallTrace name="technique_id=T1055.001,technique_name=Dynamic-link Library Injection" condition="contains all">C:\Windows\SYSTEM32\ntdll.dll;C:\Windows\System32\kernelbase.dll;UNKNOWN</CallTrace>
+          <CallTrace name="technique_id=T1055.001,technique_name=Dynamic-link Library Injection" condition="contains all">C:\Windows\SYSTEM32\ntdll.dll;C:\Windows\System32\KERNELBASE.dll;UNKNOWN</CallTrace>
           <GrantedAccess name="technique_id=T1055.001,technique_name=Dynamic-link Library Injection" condition="contains any">0x1F0FFF;0x1F1FFF;0x143A;0x1410;0x1010;0x1F2FFF;0x1F3FFF;0x1FFFFF;0x147A</GrantedAccess>
+          <SourceImage condition="is not">C:\WINDOWS\system32\AutoModeDetect.exe</SourceImage>
         </Rule>
         <GrantedAccess name="technique_id=T1055.012,technique_name=Process Hollowing">0x0800</GrantedAccess>
         <GrantedAccess name="technique_id=T1003,technique_name=Credential Dumping">0x0810</GrantedAccess>
@@ -1618,7 +1643,8 @@ contact GOLINE SA at https://www.goline.ch
           <SourceImage condition="is">C:\Program Files\Microsoft Monitoring Agent\Agent\MonitoringHost.exe</SourceImage>
           <TargetImage condition="is">C:\Windows\system32\cscript.exe</TargetImage>
         </Rule>
-    <!-- Windows Auto Mode Detection - AGGIUNGERE QUESTA -->
+    <!-- Windows Auto Mode Detection -->
+        <!-- AutoModeDetect.exe accede legittimamente a Explorer per rilevazione modalità display -->
         <Rule groupRelation="and">
             <SourceImage condition="is">C:\WINDOWS\system32\AutoModeDetect.exe</SourceImage>
             <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
@@ -1631,14 +1657,6 @@ contact GOLINE SA at https://www.goline.ch
           <SourceImage condition="contains">Alienware Command Center</SourceImage>
           <TargetImage condition="end with">Explorer.EXE</TargetImage>
           <GrantedAccess condition="is">0x1410</GrantedAccess>
-        </Rule>
-    <!-- Esclusione: Windows Auto Mode Detection -->
-        <!-- AutoModeDetect.exe accede legittimamente a Explorer per rilevazione modalità display -->
-        <Rule groupRelation="and">
-            <SourceImage condition="is">C:\WINDOWS\system32\AutoModeDetect.exe</SourceImage>
-            <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
-            <GrantedAccess condition="is">0x1410</GrantedAccess>
-            <SourceUser condition="is">NT AUTHORITY\SYSTEM</SourceUser>
         </Rule>
         <!-- Cisco Spark/Webex Teams accesso legittimo a Explorer - CORRETTO -->
         <Rule groupRelation="and">
@@ -1786,11 +1804,29 @@ contact GOLINE SA at https://www.goline.ch
       <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
       <GrantedAccess condition="is">0x1410</GrantedAccess>
     </Rule>
+    <!-- ClickShare accesso legittimo a Explorer per condivisione schermo -->
+    <Rule groupRelation="and">
+      <SourceImage condition="contains">\ClickShare\current\clickshare_native.exe</SourceImage>
+      <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+      <GrantedAccess condition="is">0x1010</GrantedAccess>
+    </Rule>
     <!-- Dell Update Service accesso a Explorer con privilegi elevati -->
     <Rule groupRelation="and">
       <SourceImage condition="contains">\Dell\UpdateService\ServiceShell.exe</SourceImage>
       <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
       <GrantedAccess condition="is">0x1f3fff</GrantedAccess>
+    </Rule>
+    <!-- Wacom Tablet Service accesso a Explorer per gestione tavoletta grafica -->
+    <Rule groupRelation="and">
+      <SourceImage condition="contains">\WTabletServiceISD.exe</SourceImage>
+      <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+      <GrantedAccess condition="is">0x1410</GrantedAccess>
+    </Rule>
+    <!-- Zero Install accesso a Explorer per integrazione con shell -->
+    <Rule groupRelation="and">
+      <SourceImage condition="contains">\Zero Install\0install.exe</SourceImage>
+      <TargetImage condition="is">C:\WINDOWS\Explorer.EXE</TargetImage>
+      <GrantedAccess condition="is">0x40</GrantedAccess>
     </Rule>
         <!-- Synology USB Client Service accesso a vari processi -->
     <Rule groupRelation="and">
@@ -2172,6 +2208,13 @@ contact GOLINE SA at https://www.goline.ch
       <TargetFilename condition="end with">.dll</TargetFilename>
       <User condition="is">NT AUTHORITY\SYSTEM</User>
     </Rule>
+    <!-- msiexec installazione .NET Framework/Runtime legittima (32-bit) -->
+    <Rule groupRelation="and">
+      <Image condition="is">C:\WINDOWS\system32\msiexec.exe</Image>
+      <TargetFilename condition="contains">\Program Files (x86)\dotnet\</TargetFilename>
+      <TargetFilename condition="end with">.dll</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
     <!-- Windows Defender MpSigStub aggiornamento definizioni -->
     <Rule groupRelation="and">
       <Image condition="is">C:\WINDOWS\system32\MpSigStub.exe</Image>
@@ -2184,6 +2227,13 @@ contact GOLINE SA at https://www.goline.ch
       <Image condition="is">C:\WINDOWS\system32\Dism.exe</Image>
       <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
       <TargetFilename condition="end with">.dll</TargetFilename>
+      <User condition="is">NT AUTHORITY\SYSTEM</User>
+    </Rule>
+    <!-- DISM.exe crea DismHost.exe in cartelle temporanee per operazioni di manutenzione -->
+    <Rule groupRelation="and">
+      <Image condition="is">C:\WINDOWS\system32\Dism.exe</Image>
+      <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
+      <TargetFilename condition="end with">\DismHost.exe</TargetFilename>
       <User condition="is">NT AUTHORITY\SYSTEM</User>
     </Rule>
         <Image condition="is">C:\Program Files (x86)\Dell\CommandUpdate\InvColPC.exe</Image>
@@ -2308,7 +2358,7 @@ contact GOLINE SA at https://www.goline.ch
             <!-- Microsoft Edge Update - Versione corretta -->
         <Rule groupRelation="and">
             <Image condition="contains">\Microsoft\EdgeUpdate\</Image>
-            <Image condition="contains">Setup</Image>
+            <Image condition="contains any">Setup;Install</Image>
             <TargetFilename condition="contains">\Microsoft\Temp\</TargetFilename>
             <TargetFilename condition="end with">.exe</TargetFilename>
             <User condition="is">NT AUTHORITY\SYSTEM</User>
@@ -2343,7 +2393,13 @@ contact GOLINE SA at https://www.goline.ch
   <Rule groupRelation="and">
   <Image condition="contains">\TeamViewer\Update\update.exe</Image>
   <TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
-  <TargetFilename condition="end with">.dll</TargetFilename>
+  <TargetFilename condition="contains any">.dll;.exe;.tmp</TargetFilename>
+  </Rule>
+  <!-- Windows Application Compatibility Scripts - acregl.exe -->
+  <Rule groupRelation="and">
+    <Image condition="contains">\Application Compatibility Scripts\acregl.exe</Image>
+    <TargetFilename condition="contains">\AppData\Local\Temp\</TargetFilename>
+    <TargetFilename condition="end with">.cmd</TargetFilename>
   </Rule>
           <!-- Windows Diagnostics SDIAG scripts - VERSIONE CORRETTA -->
         <Rule groupRelation="and">
@@ -3626,7 +3682,5 @@ contact GOLINE SA at https://www.goline.ch
     </RuleGroup>
   </EventFiltering>
 </Sysmon>
-
-
 
 
